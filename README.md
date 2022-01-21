@@ -1,1 +1,1 @@
-Some of these are incredibly scuffed do not flame pls
+Some of the other branches feature incredible scuffed and wack projects main are projects I am proud of
