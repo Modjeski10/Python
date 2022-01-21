@@ -1,2 +1,1 @@
-# Python
-Python Projects and Stuff ig
+Some of these are incredibly scuffed do not flame pls
