@@ -1,0 +1,171 @@
+import random
+import time
+
+def blackjack_start():
+  clear()  
+  play = input("Would you like to play blackjack? (Y/N)").lower()
+
+  if play == "y":
+    blackjack()
+  
+  else:
+    print("Cya")
+
+
+
+def blackjack():
+  player_total = 0
+  dealer_total = 0
+
+  player_cList = []
+  dealer_cList = []
+
+  dealer_drawn = 0
+  player_drawn = 0
+  while True:
+    player_cList.append(player_hand(player_total))
+    player_drawn += 1
+    
+    if pCheck(player_cList):
+      print("Player loses")
+      blackjack_start()
+    
+    elif player_cList[player_drawn-1] == 0:
+      showdown(player_cList,dealer_cList)
+    
+    if dCheck2(dealer_cList) > 16:
+      continue
+    
+    elif dealer_drawn < 5:
+      if dealer_drawn == 0:   
+        dealer_cList.append(dealer_hand(dealer_total))
+        dealer_drawn += 1
+        print(f"Dealer got an {dealer_cList[dealer_drawn-1]}")
+        
+      else:
+        dealer_cList.append(dealer_hand(dealer_total))
+        dealer_drawn += 1
+
+      if dCheck(dealer_cList):
+          print("Dealer drew over 21, dealer loses")
+          blackjack_start()
+        
+
+def showdown(listP,listD):
+  pTotal = 0
+  dTotal = 0
+  
+  for item in listP:
+    pTotal += item
+  
+  for item in listD:
+    dTotal += item
+  
+  if dTotal == pTotal:
+    print(f"Game Tie:\nDealer {dTotal}\nPlayer {pTotal}")
+    time.sleep(3)    
+    clear()
+    blackjack_start()
+  
+  elif dTotal > pTotal:
+    print(f"Dealer wins:\nDealer {dTotal}\nPlayer {pTotal}")
+    time.sleep(3)    
+    clear()
+    blackjack_start()
+
+  else:
+    print(f"Player wins:\nDealer {dTotal}\nPlayer {pTotal}")
+    time.sleep(3)
+    clear()
+    blackjack_start()
+
+
+
+def pCheck(clist):
+  total = 0
+  for item in clist:
+    total += item
+  if total > 21:
+    print(total)
+    return True
+  else:
+    print(total)
+    return False
+
+def dCheck(dlist):
+  total = 0
+  for item in dlist:
+    total += item
+  if total > 21:
+    return True
+  else:
+    return False
+
+def dCheck2(dlist):
+  total = 0
+  for item in dlist:
+    total += item
+  return total
+
+
+
+
+
+def player_hand(total):
+  play = input("Would you like to draw a card?: (Y/N)").lower()
+  if play == "y":
+    pCard = get_card()
+    print(f"Player got an {pCard}")
+    if pCard == 11 and (total + 11 > 21):
+      pCard = 1
+    total += pCard
+    return(total)
+  else:
+    return(0)
+
+def dealer_hand(total):
+  if total < 17:
+    dCard = get_card()
+    if dCard == 11 and (total + 11 > 21):
+      dCard = 1
+    total += dCard
+    return(total)
+  else:
+    return(0)
+
+
+
+def clear():
+  clear = "\n" * 100
+  print(clear)
+
+
+
+
+def get_card():
+  cards = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
+  
+  cards_values = {
+  "A": 11, 
+  "2":2, 
+  "3":3, 
+  "4":4, 
+  "5":5, 
+  "6":6, 
+  "7":7, 
+  "8":8, 
+  "9":9, 
+  "10":10, 
+  "J":10, 
+  "Q":10, 
+  "K":10
+  }
+  
+  getcard = random.choice(cards)
+  theCard = cards_values[getcard]
+  return theCard
+
+
+
+
+blackjack_start()
